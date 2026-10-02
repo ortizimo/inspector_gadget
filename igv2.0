@@ -1,0 +1,119 @@
+#!/bin/bash
+# author: ortizimo
+# date: 20260513
+# update: 20260518
+# version: 2.0
+# desc: searches for files used in stegonography
+
+#declared variable for end report
+a1=$(du -h ./inspectorGadget/*) 	# shows final count...add /* to hide the overall total
+a2=$(du -sh ./inspectorGadget)
+
+clear
+echo "------------------------------"
+echo -e "     \033[1;33mInspectorGadget v2.0\033[0m"
+echo "------------------------------"
+
+# delete the directory if found
+echo " Deleting Old DIR If Found..."
+echo "------------------------------"
+rm -rf inspectorGadget/
+sleep 1
+
+echo " Creating Working Directory..."
+echo "------------------------------"
+sleep 2
+
+mkdir inspectorGadget/
+cd inspectorGadget/
+sleep 1
+
+echo " Creating Sub-Directories..."
+echo "------------------------------"
+sleep 2
+mkdir -p ./pics/{jpg,jpeg,gif,png,bmp}
+mkdir -p ./docs/{pdf,doc,docx,ppt,pptx,xls,xlsx}
+mkdir -p ./vids/{mpeg,mpg,mp4,mkv,mov,avi}
+
+ls -dl */ */*/		# lists subdirs of inspectorGadget
+sleep 2
+
+echo ""
+echo "--------------------------------------------"
+echo -e " \033[1;33mSearching for PHOTO Files...Please Wait!\033[0m"
+echo "--------------------------------------------"
+sleep 1
+
+find / -type f -iname "*.jpg" -exec cp -v {} pics/jpg/ \; 2>/dev/null | tee manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.jpeg" -exec cp -v {} pics/jpeg/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.gif" -exec cp -v {} pics/gif/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.png" -exec cp -v {} pics/png/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.bmp" -exec cp -v {} pics/bmp/ \; 2>/dev/null | tee -a manifest.txt
+
+echo "--------------------------------------------"
+echo -e " \033[1;33mSearching for DOCUMENT Files...Please Wait!\033[0m"
+echo "--------------------------------------------"
+sleep 1
+find / -type f -iname "*.pdf" -exec cp -v {} docs/pdf/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.doc" -exec cp -v {} docs/doc/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.docx" -exec cp -v {} docs/docx/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.xls" -exec cp -v {} docs/xls/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.xlsx" -exec cp -v {} docs/xlsx/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.ppt" -exec cp -v {} docs/ppt/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.pptx" -exec cp -v {} docs/pptx/ \; 2>/dev/null | tee -a manifest.txt
+
+echo "--------------------------------------------"
+echo -e " \033[1;33mSearching for VIDEO Files...Please Wait!\033[0m"
+echo "--------------------------------------------"
+sleep 1
+find / -type f -iname "*.mpeg" -exec cp -v {} vids/mpeg/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.mpg" -exec cp -v {} vids/mpg/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.mp4" -exec cp -v {} vids/mp4/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.mkv" -exec cp -v {} vids/mkv/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.mov" -exec cp -v {} vids/mov/ \; 2>/dev/null | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt
+find / -type f -iname "*.avi" -exec cp -v {} vids/avi/ \; 2>/dev/null | tee -a manifest.txt
+sleep 1
+
+echo -e "\n\033[1;33;5mAll Processes Complete!\033[0m"
+echo -e "\nTotal of files found and copied." | tee -a manifest.txt 
+echo "--------------------------------------------" | tee -a manifest.txt 
+echo "$a1" | tee -a manifest.txt
+echo "--------------------------------------------" | tee -a manifest.txt 
+echo "$a2" | tee -a manifest.txt 
+echo ""
+
+
+
+
+
+
+
+
+#find / -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.gif" \) 2>/dev/null -exec bash -c '
+#	for file; do
+#		ext="${file##*.}"
+#		ext_lower=$(echo "$ext" | tr "[:upper:]" "[:lower:]")
+#		target="./$ext_lower/\$(basename \"\$file\")"
+#		if [ ! -f "$target" ]; then
+#			cp "$file" "./$ext_lower/"
+#		echo "Copied $file to ./$ext_lower/"
+#		else
+#			echo "Skipped duplicate filename: $file"
+#		fi
+#	done
+#' _ {} + | tee manifest.txt
